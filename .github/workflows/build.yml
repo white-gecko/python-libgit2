@@ -8,10 +8,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-    strategy:
-      matrix:
-        platform: ['linux/386','linux/amd64','linux/arm/v6','linux/arm/v7','linux/arm64','linux/ppc64le']
-      fail-fast: false
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -34,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: ${{ github.event_name != 'pull_request' }}
-          platforms: ${{ matrix.platform }}
+          platforms: 'linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le'
           cache-from: type=gha
           cache-to: type=gha,mode=max
           tags: ${{ steps.meta.outputs.tags }}
