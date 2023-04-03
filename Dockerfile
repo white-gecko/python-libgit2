@@ -16,3 +16,5 @@ RUN cd libgit2-1.6.3 && \
     cmake .. && \
     cmake --build . && \
     make install
+
+RUN pip install pygit2 uWSGI
