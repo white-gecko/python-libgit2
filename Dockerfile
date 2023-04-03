@@ -8,9 +8,9 @@ RUN apt-get update && \
     libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN wget https://github.com/libgit2/libgit2/archive/refs/tags/v1.5.2.tar.gz
-RUN tar xzf v1.5.2.tar.gz
-RUN cd libgit2-1.5.2 && \
+RUN wget https://github.com/libgit2/libgit2/archive/refs/tags/v1.6.3.tar.gz
+RUN tar xzf v1.6.3.tar.gz
+RUN cd libgit2-1.6.3 && \
     mkdir build && \
     cd build && \
     cmake .. && \
