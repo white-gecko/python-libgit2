@@ -20,7 +20,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Extract metadata (tags, labels) for Docker
-        id: meta
+        id: meta_libgit2
         uses: docker/metadata-action@v4
         with:
           images: |
@@ -30,7 +30,6 @@ jobs:
             prefix=libgit2-
             suffix=
       - name: Build and push for many architectures
-        id: docker_build_tagged
         uses: docker/build-push-action@v4
         with:
           file: Dockerfile.libgit2
@@ -38,10 +37,10 @@ jobs:
           platforms: 'linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le'
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta_libgit2.outputs.tags }}
+          labels: ${{ steps.meta_libgit2.outputs.labels }}
       - name: Extract metadata (tags, labels) for Docker
-        id: meta
+        id: meta_pygit2
         uses: docker/metadata-action@v4
         with:
           images: |
@@ -51,7 +50,6 @@ jobs:
             prefix=pygit2-
             suffix=
       - name: Build and push for many architectures
-        id: docker_build_tagged
         uses: docker/build-push-action@v4
         with:
           file: Dockerfile.pygit2
@@ -59,5 +57,5 @@ jobs:
           platforms: 'linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le'
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta_pygit2.outputs.tags }}
+          labels: ${{ steps.meta_pygit2.outputs.labels }}
