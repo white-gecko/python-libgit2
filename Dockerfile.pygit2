@@ -1,0 +1,11 @@
+FROM ghcr.io/white-gecko/python-libgit2:libgit2-main as libgit2
+
+RUN apt-get update && \
+    apt-get -y install \
+    build-essential \
+    wget \
+    cmake \
+    libffi-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install pygit2 uWSGI

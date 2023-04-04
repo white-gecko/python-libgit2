@@ -25,10 +25,36 @@ jobs:
         with:
           images: |
             ghcr.io/${{ github.repository }}
+          flavor: |
+            latest=auto
+            prefix=libgit2-
+            suffix=
       - name: Build and push for many architectures
         id: docker_build_tagged
         uses: docker/build-push-action@v4
         with:
+          file: Dockerfile.libgit2
+          push: ${{ github.event_name != 'pull_request' }}
+          platforms: 'linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le'
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ghcr.io/${{ github.repository }}
+          flavor: |
+            latest=auto
+            prefix=pygit2-
+            suffix=
+      - name: Build and push for many architectures
+        id: docker_build_tagged
+        uses: docker/build-push-action@v4
+        with:
+          file: Dockerfile.pygit2
           push: ${{ github.event_name != 'pull_request' }}
           platforms: 'linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le'
           cache-from: type=gha
